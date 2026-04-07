@@ -1,4 +1,5 @@
  
+import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import OurProduct from "./components/ourProductt";
 import SubscribeNewsletter from "./components/Subscribetoournewslatter";
@@ -13,6 +14,7 @@ export default function Home() {
       <TrainLikeaChampion />
      <WhatOurClientsAreSaying />
      <SubscribeNewsletter/>
+     <Footer/>
      </div>
   );
 }
