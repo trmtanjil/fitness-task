@@ -2,6 +2,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { authController } from '@/src/services/auth.controller'; 
+import Link from 'next/link';
 
 export default function VerifyOtpPage() {
   const [msg, setMsg] = useState("");
@@ -156,6 +157,9 @@ export default function VerifyOtpPage() {
               </p>
             )}
           </div>
+           <p className="text-center mt-8 text-gray-500 text-xs uppercase font-bold tracking-widest">
+          Member? <Link href="/login" className="text-[#71AC16] hover:underline">Login</Link>
+        </p>
         </div>
       </div>
     </main>

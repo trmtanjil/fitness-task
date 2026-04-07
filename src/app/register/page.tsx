@@ -15,9 +15,9 @@ export default function RegisterPage() {
     const formData = new FormData(e.currentTarget);
     const result = await authController.onRegister(formData);
 
-    if (result.success) {
+    if (result.success ||"success") {
       // সার্ভিস অলরেডি OTP এবং Email লোকাল স্টোরেজে সেভ করেছে
-      window.location.href = "/verifyotp"; 
+      window.location.href = "/login"; 
     } else {
       setError(result.error);
     }
