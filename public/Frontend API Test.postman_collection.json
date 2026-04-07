@@ -1,0 +1,400 @@
+{
+	"info": {
+		"_postman_id": "c903632a-5ca3-4298-a8bb-c16f5ddc3d8e",
+		"name": "Frontend API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39191628"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const rs = pm.response.json();\r",
+									"\r",
+									"if(rs?.token){\r",
+									"    pm.environment.set('token',rs.token)\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "user@gmail.com",
+									"description": "Email",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"description": "Password",
+									"type": "text"
+								},
+								{
+									"key": "remember_me",
+									"value": "true",
+									"description": "Remember Me - true, false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apitest.thewarriors.team/api/login",
+							"protocol": "https",
+							"host": [
+								"apitest",
+								"thewarriors",
+								"team"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "user",
+									"description": "First Name",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "test",
+									"description": "Last Name",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "user2@gmail.com",
+									"description": "Email",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"description": "Password",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "12345678",
+									"description": "Confirm Password",
+									"type": "text"
+								},
+								{
+									"key": "terms",
+									"value": "false",
+									"description": "Terms - true, false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apitest.thewarriors.team/api/register",
+							"protocol": "https",
+							"host": [
+								"apitest",
+								"thewarriors",
+								"team"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "user@gmail.com",
+									"description": "Resend OTP",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apitest.thewarriors.team/api/resend_otp",
+							"protocol": "https",
+							"host": [
+								"apitest",
+								"thewarriors",
+								"team"
+							],
+							"path": [
+								"api",
+								"resend_otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "user@gmail.com",
+									"description": "Registerd Email",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "858486",
+									"description": "Registration Verification OTP Code",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apitest.thewarriors.team/api/verify_otp",
+							"protocol": "https",
+							"host": [
+								"apitest",
+								"thewarriors",
+								"team"
+							],
+							"path": [
+								"api",
+								"verify_otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "user@gmail.com",
+									"description": "Forgot Password Email",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apitest.thewarriors.team/api/forgot-password",
+							"protocol": "https",
+							"host": [
+								"apitest",
+								"thewarriors",
+								"team"
+							],
+							"path": [
+								"api",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "user@gmail.com",
+									"description": "Forgot Password Email",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "066162",
+									"description": "Forgot Password OTP",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apitest.thewarriors.team/api/forgot-verify-otp",
+							"protocol": "https",
+							"host": [
+								"apitest",
+								"thewarriors",
+								"team"
+							],
+							"path": [
+								"api",
+								"forgot-verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "123456789",
+									"description": "New Password",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "123456789",
+									"description": "New Confirm Password",
+									"type": "text"
+								},
+								{
+									"key": "token",
+									"value": "pgHUpTTvTuLJHwRfaAORKBECNeKg1dbctPyYSBQs",
+									"description": "Forgot Password Token",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apitest.thewarriors.team/api/reset-password",
+							"protocol": "https",
+							"host": [
+								"apitest",
+								"thewarriors",
+								"team"
+							],
+							"path": [
+								"api",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://apitest.thewarriors.team/api/logout",
+							"protocol": "https",
+							"host": [
+								"apitest",
+								"thewarriors",
+								"team"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://apitest.thewarriors.team/api/user-detail",
+							"protocol": "https",
+							"host": [
+								"apitest",
+								"thewarriors",
+								"team"
+							],
+							"path": [
+								"api",
+								"user-detail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

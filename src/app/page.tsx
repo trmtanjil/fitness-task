@@ -14,7 +14,6 @@ export default function Home() {
       <TrainLikeaChampion />
      <WhatOurClientsAreSaying />
      <SubscribeNewsletter/>
-     <Footer/>
-     </div>
+      </div>
   );
 }
