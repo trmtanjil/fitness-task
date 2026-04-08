@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const API_URL = 'https://apitest.thewarriors.team/api';
 
 export interface ApiResponse<T = unknown> {
-  status: string;
+  status: string | number;
   message?: string;
   data?: T;
   otp?: string;
@@ -34,23 +35,29 @@ export const authService = {
     return response.data;
   },
   // ১. রেজিস্ট্রেশন
-  async register(formData: FormData): Promise<ApiResponse> {
-    const response = await axios.post<ApiResponse>(`${API_URL}/register`, formData);
+async register(formData: FormData): Promise<ApiResponse> {
+  const response = await axios.post<ApiResponse>(`${API_URL}/register`, formData);
 
-    if (typeof window !== 'undefined' && response.data?.status === 'success') {
-      // যদি এপিআই ওটিপি পাঠায়
-      if (response.data.otp) {
-        localStorage.setItem('temp_otp', String(response.data.otp));
+  // API রেসপন্স চেক: status যদি 201 হয়
+  if (typeof window !== 'undefined' && response.data?.status === 201) {
+    const apiData = response.data.data as any; // আপনার রেসপন্স অনুযায়ী ডাটা অবজেক্ট
+
+    if (apiData) {
+      // ১. ওটিপি সেভ করা (রেসপন্স ডাটা থেকে)
+      if (apiData.otp) {
+        localStorage.setItem('temp_otp', String(apiData.otp));
       }
       
-      // ইমেইলটি সেভ করে রাখা যেন ওটিপি পেজে কাজে লাগে
-      const email = formData.get('email');
+      // ২. ইমেইল সেভ করা (রেসপন্স থেকে অথবা সরাসরি ফর্ম ডাটা থেকে)
+      const email = apiData.email || formData.get('email');
       if (email) {
         localStorage.setItem('temp_email', String(email));
       }
     }
-    return response.data;
-  },
+  }
+  
+  return response.data;
+},
 
   // ২. ওটিপি ভেরিফাই
   async verifyOtp(formData: FormData): Promise<ApiResponse> {

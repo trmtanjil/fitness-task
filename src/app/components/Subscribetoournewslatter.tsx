@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function SubscribeNewsletter() {
   return (
-    <section className="py-16 px-4 md:px-8 max-w-[1440px] md:max-w-[1440px] lg:max-w-[1440px] mx-auto bg-white relative overflow-hidden ">
+    <section className="  pb-5 pt-5 px-4 md:px-8 max-w-[1440px] md:max-w-[1440px] lg:max-w-[1440px] mx-auto bg-white relative overflow-hidden ">
       {/* Background Decorative Elements (Optional - based on figma) */}
       <div className="absolute top-10 right-10 opacity-20 hidden lg:block">
         <div className="grid grid-cols-3 gap-2 h-[400px]">

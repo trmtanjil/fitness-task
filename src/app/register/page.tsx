@@ -13,11 +13,14 @@ export default function RegisterPage() {
     setError("");
 
     const formData = new FormData(e.currentTarget);
+    
+    // ১. ইউজার যখন বাটনে ক্লিক করবে, রেজিস্ট্রেশন কল হবে
     const result = await authController.onRegister(formData);
 
-    if (result.success ||"success") {
-      // সার্ভিস অলরেডি OTP এবং Email লোকাল স্টোরেজে সেভ করেছে
-      window.location.href = "/login"; 
+    if (result.success || "success") {
+      // ২. রেজিস্ট্রেশন সফল হলে অটোমেটিক ওটিপি পেজে পাঠিয়ে দিবে
+      // এখানে আলাদা করে resend কল করার দরকার নেই, কারণ register এপিআই নিজেই ওটিপি পাঠায়
+      window.location.href = "/verifyotp"; 
     } else {
       setError(result.error);
     }

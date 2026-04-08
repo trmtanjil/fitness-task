@@ -15,7 +15,7 @@ export default function Hero() {
         {/* ================= NAVBAR ================= */}
         <nav className="absolute top-0 left-0 w-full z-30 flex items-center justify-between px-4 sm:px-6 py-4">
           {/* Logo */}
-        <div className="bg-white p-9 rounded-full relative left-0">
+        <div className="  rounded-full relative left-0">
             <div className="bg-[#71AC16] p-3 rounded-full">
             <div className="grid grid-cols-2 gap-1 w-6">
               {[1, 2, 3, 4].map((i) => (

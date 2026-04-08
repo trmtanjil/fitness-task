@@ -36,21 +36,29 @@ export const authController = {
   },
 
   // রেজিস্ট্রেশন হ্যান্ডলার
-  async onRegister(formData: FormData): Promise<AuthResult> {
-    try {
-      const response = await authService.register(formData);
-      if (response.status === 'success') {
-        return {
-          success: true,
-          otp: response.otp,
-          message: extractMessage(response, 'Registration successful!'),
-        };
-      }
-      return { success: false, error: extractMessage(response, 'Registration failed') };
-    } catch (err: any) {
-      return { success: false, error: err.response?.data?.message || 'Server error during registration' };
+ async onRegister(formData: FormData): Promise<AuthResult> {
+  try {
+    const response = await authService.register(formData);
+
+    // স্ট্যাটাস ২০১ হলে সফল হিসেবে ধরে নিবো
+    if (response.status === 201 || response.status === 'success') {
+      return {
+        success: true,
+        message: response.message || 'Registration successful',
+      };
     }
-  },
+
+    return {
+      success: false,
+      error: response.message || 'Registration failed',
+    };
+  } catch (err: any) {
+    return {
+      success: false,
+      error: err.response?.data?.message || 'Server error. Please try again.',
+    };
+  }
+},
 
   // ওটিপি ভেরিফিকেশন হ্যান্ডলার
   async onVerify(formData: FormData): Promise<AuthResult> {

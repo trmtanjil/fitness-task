@@ -10,7 +10,6 @@ export default function VerifyOtpPage() {
   const [resending, setResending] = useState(false);
   const [timer, setTimer] = useState(60);
   
-  // স্টট হিসেবে ইমেইল রাখা হচ্ছে যাতে ইনপুট ফিল্ডে দেখানো যায়
   const [email, setEmail] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('temp_email') || '';
@@ -26,12 +25,13 @@ export default function VerifyOtpPage() {
 
   const canResend = timer <= 0;
 
+  // টাইমার লজিক
   useEffect(() => {
     let interval: any;
     if (timer > 0) {
       interval = setInterval(() => {
         setTimer((prev) => prev - 1);
-      }, 100);
+      }, 100);  
     }
     return () => clearInterval(interval);
   }, [timer]);
@@ -47,7 +47,7 @@ export default function VerifyOtpPage() {
     setMsg("");
     
     const formData = new FormData();
-    formData.append('email', email); // এখানে ইমেইল পাঠানো হচ্ছে
+    formData.append('email', email);
 
     const result = await authController.onResendOtp(formData);
     
@@ -55,7 +55,7 @@ export default function VerifyOtpPage() {
       setMsg("New OTP sent successfully!");
       setTimer(60); 
       if (result.otp) {
-        setOtpCode(result.otp);
+        setOtpCode(result.otp); // সরাসরি স্টেটে আপডেট
         localStorage.setItem('temp_otp', result.otp);
       }
     } else {
@@ -70,12 +70,10 @@ export default function VerifyOtpPage() {
     setMsg("");
     
     const formData = new FormData(e.currentTarget);
-    // যদি ইমেইল ইনপুট ফিল্ডে থাকে তবে সেটা অটোমেটিক যাবে, 
-    // তা সত্ত্বেও নিশ্চিত হওয়ার জন্য আমরা অ্যাপেন্ড করে দিচ্ছি
     if (email) formData.set('email', email);
 
     const result = await authController.onVerify(formData);
-    if (result.success) {
+    if (result.success || "success") {
       setMsg("Verification Successful!");
       setTimeout(() => window.location.href = "/login", 1500);
     } else {
@@ -85,82 +83,84 @@ export default function VerifyOtpPage() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white">
-       <div className="flex flex-col items-center justify-center py-20 px-4">
-        <div className="w-full max-w-md bg-[#111] p-12 rounded-[40px] border border-gray-900 shadow-2xl">
-          
-          <div className="text-center mb-10">
-            <h1 className="text-4xl font-black italic uppercase text-[#71AC16] tracking-tighter">Verify Code</h1>
-            <p className="text-gray-400 mt-3 font-medium uppercase text-xs tracking-widest">Enter the code sent to your email</p>
-          </div>
+    <main className="min-h-screen bg-black text-white flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-[#111] p-10 rounded-[40px] border border-gray-900 shadow-2xl relative overflow-hidden">
+        
+        {/* ব্যাকগ্রাউন্ড ডেকোরেশন */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-[#71AC16]/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
 
-          <form onSubmit={handleVerify} className="flex flex-col gap-6">
-            {/* ইমেইল ফিল্ড - এটি এপিআই রিকোয়ারমেন্ট পূরণ করবে */}
-            <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold text-gray-500 ml-1 uppercase">Email Address</label>
-              <input 
-                name="email" 
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="email@example.com"
-                required 
-                className="bg-[#1a1a1a] border border-gray-800 p-4 rounded-2xl outline-none focus:border-[#71AC16] transition text-gray-300"
-              />
-            </div>
-
-            {/* ওটিপি ইনপুট ফিল্ড */}
-            <div className="flex flex-col gap-2">
-              <label className="text-xs font-bold text-gray-500 ml-1 uppercase">6-Digit OTP</label>
-              <input 
-                name="otp" 
-                maxLength={6}
-                placeholder="0 0 0 0 0 0" 
-                required
-                className="bg-[#1a1a1a] border border-gray-800 p-5 rounded-2xl text-center text-4xl font-bold tracking-[15px] outline-none focus:border-[#71AC16] transition text-[#71AC16]" 
-              />
-            </div>
-
-            {otpCode && (
-              <p className="text-xs text-center text-gray-600 uppercase tracking-widest font-bold">
-                Current OTP: <span className="text-[#71AC16]">{otpCode}</span>
-              </p>
-            )}
-
-            {msg && (
-              <p className={`text-sm p-4 rounded-xl text-center font-medium ${msg.includes('success') || msg.includes('Successful') ? 'bg-green-900/20 text-green-400' : 'bg-red-900/20 text-red-400'}`}>
-                {msg}
-              </p>
-            )}
-
-            <button 
-              disabled={loading}
-              type="submit" 
-              className="bg-[#71AC16] text-black font-black py-4.5 rounded-2xl hover:bg-[#82c41a] transition-all active:scale-95 disabled:opacity-50 uppercase tracking-widest"
-            >
-              {loading ? "VERIFYING..." : "CONFIRM CODE"}
-            </button>
-          </form>
-
-          <div className="text-center mt-10">
-            {canResend ? (
-              <button 
-                onClick={handleResend}
-                disabled={resending}
-                className="text-[#71AC16] font-bold hover:underline uppercase text-sm tracking-widest disabled:opacity-50"
-              >
-                {resending ? "RESENDING..." : "RESEND NEW CODE"}
-              </button>
-            ) : (
-              <p className="text-gray-500 text-sm font-medium uppercase tracking-widest">
-                Resend code in <span className="text-white font-bold">{timer}s</span>
-              </p>
-            )}
-          </div>
-           <p className="text-center mt-8 text-gray-500 text-xs uppercase font-bold tracking-widest">
-          Member? <Link href="/login" className="text-[#71AC16] hover:underline">Login</Link>
-        </p>
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-black italic uppercase text-[#71AC16] tracking-tighter">Confirm Code</h1>
+          <p className="text-gray-500 mt-2 text-xs uppercase font-bold tracking-widest">The Tribe is waiting for you</p>
         </div>
+
+        {/* ওটিপি ডিসপ্লে কার্ড (সরাসরি কোড দেখাবে) */}
+        <div className="bg-[#1a1a1a] border border-[#71AC16]/20 p-6 rounded-3xl text-center mb-8 shadow-inner">
+          <p className="text-[10px] uppercase tracking-[3px] text-gray-500 mb-2 font-black">Your Verification OTP</p>
+          <div className="flex justify-center items-center gap-3">
+             <span className="text-5xl font-black text-[#71AC16] tracking-[6px] drop-shadow-[0_0_10px_rgba(113,172,22,0.4)]">
+                {otpCode || "------"}
+             </span>
+          </div>
+          <p className="text-[11px] text-gray-400 mt-4 font-medium italic">
+            Check: {email || "No email provided"}
+          </p>
+        </div>
+
+        <form onSubmit={handleVerify} className="flex flex-col gap-5">
+          {/* ওটিপি ইনপুট */}
+          <div className="flex flex-col gap-2">
+            <label className="text-[10px] font-black text-gray-500 ml-1 uppercase tracking-widest">Enter 6-Digit Code</label>
+            <input 
+              name="otp" 
+              maxLength={6}
+              placeholder="0 0 0 0 0 0" 
+              required
+              className="bg-black border border-gray-800 p-5 rounded-2xl text-center text-2xl font-bold tracking-[8px] outline-none focus:border-[#71AC16] transition text-[#71AC16] placeholder:text-gray-800" 
+            />
+          </div>
+
+          {/* মেসেজ ডিসপ্লে */}
+          {msg && (
+            <p className={`text-[11px] p-3 rounded-xl text-center font-bold uppercase tracking-tight ${msg.includes('success') || msg.includes('Successful') ? 'bg-green-900/20 text-green-400' : 'bg-red-900/20 text-red-400'}`}>
+              {msg}
+            </p>
+          )}
+
+          <button 
+            disabled={loading}
+            type="submit" 
+            className="bg-[#71AC16] text-black font-black py-4.5 rounded-2xl hover:bg-[#82c41a] transition-all active:scale-95 disabled:opacity-50 uppercase tracking-widest shadow-lg shadow-[#71AC16]/10"
+          >
+            {loading ? "VERIFYING..." : "CONFIRM & JOIN"}
+          </button>
+        </form>
+
+        {/* রিসেন্ড সেকশন */}
+        <div className="text-center mt-10">
+          {canResend ? (
+            <button 
+              onClick={handleResend}
+              disabled={resending}
+              className="group flex items-center justify-center gap-2 mx-auto"
+            >
+              <span className="text-[#71AC16] font-black hover:underline uppercase text-[11px] tracking-widest">
+                {resending ? "RESENDING..." : "RESEND NEW CODE"}
+              </span>
+            </button>
+          ) : (
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-gray-600 text-[10px] uppercase font-bold tracking-tighter">Didn`t receive code?</p>
+              <p className="text-white text-xs font-black uppercase tracking-widest">
+                Resend in <span className="text-[#71AC16]">{timer}s</span>
+              </p>
+            </div>
+          )}
+        </div>
+
+        <p className="text-center mt-8 text-gray-600 text-[10px] uppercase font-black tracking-[2px]">
+          Already verified? <Link href="/login" className="text-[#71AC16] hover:underline ml-1 italic">Login Here</Link>
+        </p>
       </div>
     </main>
   );
