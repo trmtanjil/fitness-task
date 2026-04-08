@@ -1,16 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
+ import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
+  FaLocationPin,
+  
   FaXTwitter,
 } from "react-icons/fa6";
 
 export default function Hero() {
   return (
-    <section className="relative bg-white p-3 sm:p-4">
-      <div className="relative max-w-[1440px] mx-auto bg-black min-h-[650px] sm:min-h-[700px] rounded-[32px] sm:rounded-[60px] overflow-hidden">
+    <section className="relative bg-white w-full ">
+      <div className="relative w-full mx-auto bg-black min-h-[650px] sm:min-h-[700px] rounded-[32px] sm:rounded-[60px] overflow-hidden">
 
         {/* ================= NAVBAR ================= */}
         <nav className="absolute top-0 left-0 w-full z-30 flex items-center justify-between px-4 sm:px-6 py-4">
@@ -81,7 +83,7 @@ export default function Hero() {
                   SHOP NOW →
                 </button>
                 <button className="border border-white p-3 rounded-xl text-white hover:bg-white hover:text-black transition">
-                  📍
+                  <FaLocationPin size={18}   />
                 </button>
               </div>
             </div>
