@@ -39,9 +39,7 @@ export default function LoginPage() {
         </form>
 
         {error && <p className="text-center text-red-500 mt-4 text-xs font-bold uppercase">{error}</p>}
-        <p className="text-center mt-10 text-gray-500 text-xs uppercase font-bold tracking-widest">
-            <Link href="/verifyotp" className="text-[#71AC16] hover:underline">verify Account</Link>
-        </p>
+          
 
         <p className="text-center mt-10 text-gray-500 text-xs uppercase font-bold tracking-widest">
           New here? <Link href="/register" className="text-[#71AC16] hover:underline">Create Account</Link>
