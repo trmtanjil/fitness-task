@@ -12,7 +12,7 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <section className="relative bg-white w-full ">
-      <div className="relative w-full mx-auto bg-black min-h-[650px] sm:min-h-[700px] rounded-[32px] sm:rounded-[60px] overflow-hidden">
+      <div className="relative w-full mx-auto bg-black min-h-[650px] sm:min-h-[700px]     overflow-hidden">
 
         {/* ================= NAVBAR ================= */}
         <nav className="absolute top-0 left-0 w-full z-30 flex items-center justify-between px-4 sm:px-6 py-4">

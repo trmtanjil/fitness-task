@@ -4,7 +4,7 @@ import { FaPlay } from 'react-icons/fa6';
 
 export default function TrainLikeaChampion() {
   return (
-    <section className="py-16 px-4 md:px-8  w-full mx-auto bg-white">
+    <section className="py-16 px-4    w-full mx-auto bg-white">
       {/* Section Header */}
       <div className="mb-10 text-left">
         <h2 className="text-3xl font-black italic uppercase text-[#000000] tracking-tight">

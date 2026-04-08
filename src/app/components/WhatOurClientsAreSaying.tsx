@@ -55,8 +55,7 @@ const testimonials = [
 
 export default function WhatOurClientsAreSaying() {
   return (
-    <section className="py-16 px-4 md:px-8 w-full mx-auto bg-white">
-      {/* Section Header */}
+    <section className="py-16 px-4   w-full mx-auto bg-white">
       <div className="mb-10 text-left">
         <h2 className="text-3xl font-black italic uppercase text-[#000000] tracking-tight">
           What Our Clients Are Saying
@@ -65,9 +64,11 @@ export default function WhatOurClientsAreSaying() {
           Real Stories, Real Results — Hear From Our Athletes
         </p>
       </div>
+    <div className='bg-gray-100 p-6 rounded-2xl'>
+        {/* Section Header */}
 
       {/* Testimonials Container with Light Gray Background */}
-      <div className="bg-[#FFFFFF] rounded-[40px] p-6 md:p-12">
+      <div className="  rounded-[40px]   mxw-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((item) => (
             <div 
@@ -114,6 +115,7 @@ export default function WhatOurClientsAreSaying() {
           ))}
         </div>
       </div>
+    </div>
     </section>
   );
 }
